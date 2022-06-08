@@ -24,16 +24,37 @@ sed -i 's/invalid users = root/#invalid users = root/g' feeds/packages/net/samba
 sed -i "s?/bin/login?/usr/libexec/login.sh?g" package/feeds/packages/ttyd/files/ttyd.config
 
 # 移除重复软件包
+rm -rf feeds/luci/applications/luci-app-aliyundrive-fuse
+rm -rf feeds/luci/applications/luci-app-amlogic
+rm -rf feeds/luci/applications/luci-app-argon-config
+rm -rf feeds/luci/applications/luci-app-ddnsto
+rm -rf feeds/luci/applications/luci-app-dockerman
+rm -rf feeds/luci/applications/luci-app-eqos
+rm -rf feeds/luci/applications/luci-app-netdata
+rm -rf feeds/luci/applications/luci-app-onliner
 rm -rf feeds/luci/applications/luci-app-openclash
 rm -rf feeds/luci/applications/luci-app-pushbot
+rm -rf feeds/luci/applications/luci-app-serverchan
+rm -rf feeds/luci/applications/luci-app-unblockneteasemusic
+rm -rf feeds/luci/applications/luci-app-wrtbwmon
+rm -rf feeds/luci/themes/luci-theme-argon
+rm -rf feeds/luci/themes/luci-theme-netgear
 
 # 添加额外软件包
+git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git package/luci-app-unblockneteasemusic
+git clone https://github.com/cyh92/luci-app-onliner.git package/luci-app-onliner
 git clone https://github.com/messense/aliyundrive-fuse/openwrt/aliyundrive-fuse package/aliyundrive-fuse
 git clone https://github.com/messense/aliyundrive-fuse/openwrt/luci-app-aliyundrive-fuse.git package/luci-app-aliyundrive-fuse
+git clone https://github.com/tty228/luci-app-serverchan.git package/luci-app-serverchan
 git clone https://github.com/zzsj0928/luci-app-pushbot.git package/luci-app-pushbot
+svn co https://github.com/kiddin9/openwrt-packages/trunk/luci-app-eqos package/luci-app-eqos
 svn co https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-ddnsto package/luci-app-ddnsto
 svn co https://github.com/linkease/nas-packages/trunk/network/services/ddnsto package/ddnsto
+svn co https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-dockerman package/luci-app-dockerman
 svn co https://github.com/ophub/luci-app-amlogic/trunk/luci-app-amlogic package/luci-app-amlogic
+svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-netdata package/luci-app-netdata
+svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-wrtbwmon package/luci-app-wrtbwmon
+svn co https://github.com/sirpdboy/sirpdboy-package/trunk/wrtbwmon package/wrtbwmon
 
 # 其他调整
 sed -i "s|https.*/OpenWrt|https://github.com/v8040/OpenWrt-N1|g" package/luci-app-amlogic/root/etc/config/amlogic
@@ -54,6 +75,14 @@ svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/l
 pushd package/luci-app-openclash/tools/po2lmo
 make && sudo make install
 popd
+
+# Themes
+git clone https://github.com/davinyue/luci-theme-edgee package/luci-theme-edge
+git clone https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom package/luci-theme-infinityfreedom
+git clone https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
+git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
+git clone https://github.com/jerrykuku/luci-app-argon-config package/luci-app-argon-config
+
 
 # 修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
